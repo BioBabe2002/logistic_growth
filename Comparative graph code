@@ -1,0 +1,35 @@
+library(ggplot2)
+growth_data <- read.csv("experiment2.csv")
+logistic_fun <- function(t) {
+  
+  N <- (N0*K*exp(r*t))/(K-N0+N0*exp(r*t))
+  
+  return(N)
+  
+}
+  
+  
+  N0 <- exp(8.186598)
+  
+  r <- 0.025874
+  
+  K <- 999877492
+  
+  exp_fun <- function(t) {
+    
+    N <- (N0*exp(r*t))
+    
+    return(N)
+    
+  }
+  comparative_graph <- ggplot(data=growth_data, aes(x=t, y=N)) +
+    geom_function(fun=logistic_fun, aes(col="Logistic")) +
+    geom_function(fun=exp_fun, aes(col="Exponential"))+
+    theme_bw()+
+    labs(x="Time(min)", y="Number of E. coli", 
+         title = "Growth of E. coli comparative logistic and exponential models",
+         colour="Growth Function")+
+    theme(plot.title = element_text(hjust=0.5))+
+    scale_y_continuous(limits = c(0,10000000000))
+  comparative_graph
+  
